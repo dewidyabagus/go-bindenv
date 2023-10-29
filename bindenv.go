@@ -96,7 +96,7 @@ func (e *env) unmarshal(raw any) (err error) {
 			tagEnv = strings.ToUpper(to.Field(i).Name)
 		}
 
-		envValue := strings.TrimSpace(e.Get(tagEnv))
+		envValue := strings.TrimSpace(os.Getenv(tagEnv))
 		if envValue == "" {
 			envValue = e.maps[tagEnv]
 		}
