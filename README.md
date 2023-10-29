@@ -1,2 +1,2 @@
-# go-bindenv
-Bind environment variables into a struct
+# Go Bind Env
+Bind environment variables into a struct.
