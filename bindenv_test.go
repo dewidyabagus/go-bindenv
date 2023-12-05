@@ -124,4 +124,19 @@ func TestUnmarshalEnv(t *testing.T) {
 		require.Nil(t, env.Bind(&input))
 		assert.Equal(t, expected, input)
 	})
+
+	t.Run("Binding an empty env to boolean data type", func(t *testing.T) {
+		type defValue struct {
+			Boolean     bool
+			Integer     int
+			IntUnsigned uint
+			Floating    float64
+		}
+		os.Clearenv()
+
+		input := defValue{}
+		expected := defValue{}
+		require.Nil(t, New().Bind(&input))
+		assert.Equal(t, expected, input)
+	})
 }

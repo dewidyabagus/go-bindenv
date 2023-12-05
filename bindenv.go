@@ -111,20 +111,40 @@ func (e *env) unmarshal(raw any) (err error) {
 			vo.Field(i).SetString(envValue)
 
 		case reflect.Bool:
-			res, err = strconv.ParseBool(envValue)
-			vo.Field(i).SetBool(res.(bool))
+			if envValue == "" {
+				vo.Field(i).SetBool(false)
+
+			} else {
+				res, err = strconv.ParseBool(envValue)
+				vo.Field(i).SetBool(res.(bool))
+			}
 
 		case reflect.Uint, reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64:
-			res, err = strconv.ParseUint(envValue, 10, 64)
-			vo.Field(i).SetUint(res.(uint64))
+			if envValue == "" {
+				vo.Field(i).SetUint(0)
+
+			} else {
+				res, err = strconv.ParseUint(envValue, 10, 64)
+				vo.Field(i).SetUint(res.(uint64))
+			}
 
 		case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
-			res, err = strconv.ParseInt(envValue, 10, 64)
-			vo.Field(i).SetInt(res.(int64))
+			if envValue == "" {
+				vo.Field(i).SetInt(0)
+
+			} else {
+				res, err = strconv.ParseInt(envValue, 10, 64)
+				vo.Field(i).SetInt(res.(int64))
+			}
 
 		case reflect.Float32, reflect.Float64:
-			res, err = strconv.ParseFloat(envValue, 64)
-			vo.Field(i).SetFloat(res.(float64))
+			if envValue == "" {
+				vo.Field(i).SetFloat(0)
+
+			} else {
+				res, err = strconv.ParseFloat(envValue, 64)
+				vo.Field(i).SetFloat(res.(float64))
+			}
 		}
 	}
 	return
