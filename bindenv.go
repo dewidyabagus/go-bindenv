@@ -76,10 +76,10 @@ func (e *env) Bind(raw any) error {
 		return errors.New("can only process struct data type")
 	}
 
-	return e.unmarshal(raw)
+	return e.parseStruct(raw)
 }
 
-func (e *env) unmarshal(raw any) (err error) {
+func (e *env) parseStruct(raw any) (err error) {
 	to := reflect.TypeOf(raw).Elem()
 
 	vo := reflect.ValueOf(raw)
@@ -87,7 +87,7 @@ func (e *env) unmarshal(raw any) (err error) {
 
 	for i := 0; i < vo.NumField(); i++ {
 		if vo.Field(i).Type().Kind() == reflect.Struct {
-			e.unmarshal(vo.Field(i).Addr().Interface())
+			e.parseStruct(vo.Field(i).Addr().Interface())
 			continue
 		}
 
